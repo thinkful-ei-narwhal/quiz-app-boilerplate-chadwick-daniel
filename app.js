@@ -1,28 +1,70 @@
+'use strict';
+
 /**
  * Example store structure
  */
-const store = {
+const STORE = {
   // 5 or more questions are required
   questions: [
     {
-      question: 'What color is broccoli?',
+      question: 'What is the name of the village where the anime Naruto takes place?',
       answers: [
-        'red',
-        'orange',
-        'pink',
-        'green'
+        'Chicago',
+        'Nippon',
+        'Konoha',
+        'Coruscant'
       ],
-      correctAnswer: 'green'
+      correctAnswer: 'Konoha'
     },
     {
-      question: 'What is the current year?',
+      question: 'In the anime Konosuba, what is the color of Kazumas tracksuit?',
       answers: [
-        '1970',
-        '2015',
-        '2019',
-        '2005'
+        'Red',
+        'Green',
+        'Indigo',
+        'Vanta Black'
       ],
-      correctAnswer: '2019'
+      correctAnswer: 'Green'
+    },
+    {
+      question: 'In Attack On Titan, how many walls are protecting humanity?',
+      answers: [
+        '5',
+        '1',
+        '9',
+        '3'
+      ],
+      correctAnswer: '3'
+    },
+    {
+      question: 'In the anime One Punch Man, what is the hero name of our protagonist Saitama?',
+      answers: [
+        'Caped Baldy',
+        'One Punch Man',
+        'Single Punch Hero',
+        'The Strongest'
+      ],
+      correctAnswer: 'Caped Baldy'
+    },
+    {
+      question: 'How many kingdoms are there in the anime Black Clover?',
+      answers: [
+        '1',
+        '2',
+        '3',
+        '4'
+      ],
+      correctAnswer: '4'
+    },
+    {
+      question: 'In the anime One Piece, what is the name of the Devil Fruit that our protagonist Luffy consumes?',
+      answers: [
+        'Gomu Gomo no Mi',
+        'Goro Goro no Mi',
+        'Gura Gura no Mi',
+        'Mera Mera no Mi'
+      ],
+      correctAnswer: 'Gomu Gomu no Mi'
     }
   ],
   quizStarted: false,
