@@ -102,13 +102,13 @@ function questionTemplate(){
 
     <form class="js-form">
       <fieldset>
-        <input type="radio" id="${answerArray[0]}" name="quiz" value="${answerArray[0]}">
+        <input class="answer" type="radio" id="${answerArray[0]}" name="quiz" value="${answerArray[0]}">
         <label for="${answerArray[0]}">${answerArray[0]}</label>
-        <input type="radio" id="${answerArray[1]}" name="quiz" value="${answerArray[1]}">
+        <input class="answer" type="radio" id="${answerArray[1]}" name="quiz" value="${answerArray[1]}">
         <label for="${answerArray[1]}">${answerArray[1]}</label>
-        <input type="radio" id="${answerArray[2]}" name="quiz" value="${answerArray[2]}">
+        <input class="answer" type="radio" id="${answerArray[2]}" name="quiz" value="${answerArray[2]}">
         <label for="${answerArray[2]}">${answerArray[2]}</label>
-        <input type="radio" id="${answerArray[3]}" name="quiz" value="${answerArray[3]}">
+        <input class="answer" type="radio" id="${answerArray[3]}" name="quiz" value="${answerArray[3]}">
         <label for="${answerArray[3]}">${answerArray[3]}</label>
         
         <label for="answer"></label>
@@ -209,9 +209,13 @@ function resultsTemplate(){
 // we need to make this ONE function
 
 function renderPage() {
-  // render the question in the DOM
-  if (STORE.quizStarted) {
-    console.log('`renderQuestion` ran');
+  console.log('`renderPage` ran');
+  if (!(STORE.quizStarted)) {
+    const startString = startTemplate();
+    // instert the HTML into the DOM
+    $('main').html(startString);
+  } else {
+    // render the question in the DOM
     const questionString = questionTemplate();
 
     // clear the html from the DOM
@@ -221,25 +225,18 @@ function renderPage() {
   }
 }
 
-function renderStart() {
-  console.log('`renderStart` ran');
-  const startString = startTemplate();
-  // instert the HTML into the DOM
-  $('main').html(startString);
-
-}
-
 /********** EVENT HANDLER FUNCTIONS **********/
 
 // These functions handle events (submit, click, etc)
 
 function startGame(){
-  renderStart();
+  renderPage();
   $('.submit').click( event => {
     event.preventDefault();
-    // moves out of the first screen, onto first question
     STORE.quizStarted = true;
+    renderPage();
   });
+  
 }
 
 function getQuestion(){
@@ -249,7 +246,12 @@ function getQuestion(){
 }
 
 function getAnswer(){
-
+  $('.js-form').on('click', '.answer', event => {
+    event.preventDefault();
+    const val = $(event.currentTarget).first().val();
+    console.log(val);
+    return val;
+  });
 }
 
 function submitAnswer(){
@@ -257,19 +259,36 @@ function submitAnswer(){
   $('.submit').click( event => {
     event.preventDefault();
     $('main').html('');
+    renderPage();
     return ans;
   });
 }
 
 function wasRight(){
-  // if the answer is right, move on and show the correct render
-
-  // if the answer is wrong, move on and show the incorrect render
+  const indexNum = STORE.questionNumber;
+  const quest = STORE.questions;
+  const answer = quest.correctAnswer;
+  const submitted = submitAnswer();
+  return (submitted === answer);
 }
 
 function nextQuestion(){
 
   STORE.questionNumber += 1;
+  renderPage();
 }
 
 function restartGame(){}
+
+// -----------------------------------
+
+
+// this function will be our callback when the page loads.
+
+function handleAll() {
+  startGame();
+  renderPage();
+}
+
+// when the page loads, call `handleAll`
+$(handleAll);
