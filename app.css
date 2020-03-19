@@ -9,6 +9,7 @@
 
 * {
   box-sizing: border-box;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .main-nav-list {
@@ -29,8 +30,7 @@
   padding:10px;
 }
 
-h1 {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+h1, h2 {
   text-align: center;
   direction: flex;
   flex-direction: row;
@@ -43,14 +43,44 @@ h1 {
   overflow-wrap: anywhere;
 }
 
+h3 {
+  text-align: center;
+  direction: flex;
+  flex-direction: row;
+  margin-left: auto;
+  margin-right: auto;
+  width: 500px;
+  padding: 7.5px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  overflow-wrap: anywhere;
+}
+
+p {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 500px;
+  padding: 7.5px;
+  margin-top: 15px;
+  margin-bottom: 50px;
+  overflow-wrap: anywhere;
+}
+
+.score {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 500px;
+  padding: 7.5px;
+  margin-top: 1px;
+  margin-bottom: 1px;
+}
+
 input {
   display: block;
-  width: 320px;
   height: 55px;
-  text-align: left;
-  padding: 7.5px;
-  margin-top: 7.5px;
-  margin-bottom: 15px;
+  text-align: center;
 }
 
 input[type=submit] {
