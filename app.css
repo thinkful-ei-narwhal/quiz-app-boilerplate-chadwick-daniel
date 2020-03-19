@@ -1,33 +1,13 @@
 /* Your styles should be mobile-first and responsive */
 
-/** 
-  * If you are unclear on how to utilize a mobile-first, responsive technique to write your CSS, here is an example: 
-  *
-  * https://github.com/andreacardybailey/responsive_example/blob/master/styles/responsive-base.css 
-  *
-*/
-
 * {
   box-sizing: border-box;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-.main-nav-list {
-  list-style: none;
-  padding: 0;
-}
-.main-nav-list-item {
-  padding: .7rem 0;
-  text-align:center;
-  background-color: lime;
-  border: 1px solid #000;
-}
-
-.box {
-  background-color: pink;
-  border:1px solid blue;
-  margin: 10px 0;
-  padding:10px;
+body {
+  width: 75%;
+  margin: 0 auto;
 }
 
 h1, h2 {
@@ -36,7 +16,7 @@ h1, h2 {
   flex-direction: row;
   margin-left: auto;
   margin-right: auto;
-  width: 500px;
+  width: 75%;
   padding: 7.5px;
   margin-top: 50px;
   margin-bottom: 15px;
@@ -75,6 +55,7 @@ p {
   padding: 7.5px;
   margin-top: 1px;
   margin-bottom: 1px;
+  overflow-wrap: anywhere;
 }
 
 input {
@@ -95,9 +76,11 @@ input[type=button] {
   font-size: 24px;
   text-emphasis: bold;
   text-align: center;
-  width: 320px;
+  width: 150px;
   height: 55px;
   cursor: pointer;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 input[type=button]:hover {
@@ -119,4 +102,32 @@ fieldset {
   margin-right: 0;
   margin-bottom: 0;
   border: none;
+}
+
+@media (min-width: 700px) { /* Medium Screen */
+  body {
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  input[type=button] {
+    width: 200px;
+    margin-top: 20px;
+  }
+
+  .score {
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 1024px) { /* Large Screen */
+  body {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  input[type=button] {
+    margin-top: 40px;
+    width: 320px;
+  }
 }
