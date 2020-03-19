@@ -91,10 +91,48 @@ const STORE = {
 
 // These functions return HTML templates
 
-function startTemplate(){}
-function questionTemplate(){}
+
+function questionTemplate(){
+  const currQuest = getQuestion();
+  const num = STORE.questionNumber + 1;
+  const answerArray = currQuest.answers;
+  return `
+    <h2>Question ${num}:</h2>
+    <p>${currQuest.question}</p>
+
+    <form class="js-form">
+      <fieldset>
+        <input type="radio" id="${answerArray[0]}" value="${answerArray[0]}">
+        <label for="${answerArray[0]}">${answerArray[0]}</label>
+        <input type="radio" id="${answerArray[1]}" value="${answerArray[1]}">
+        <label for="${answerArray[1]}">${answerArray[1]}</label>
+        <input type="radio" id="${answerArray[2]}" value="${answerArray[2]}">
+        <label for="${answerArray[2]}">${answerArray[2]}</label>
+        <input type="radio" id="${answerArray[3]}" value="${answerArray[3]}">
+        <label for="${answerArray[3]}">${answerArray[3]}</label>
+        
+        <label for="answer"></label>
+        <input class="submit" type="button id="answer" value="Submit">
+    </fieldset>
+    </form> 
+  `;
+}
+
+function startTemplate(){
+  return `
+    <form class="js-form">
+        <fieldset>
+            <label for="start"></label>
+            <input class="submit" type="button" id="start" value="START!">
+        </fieldset>
+    </form>
+  `;
+}
+
 function correctTemplate(){}
+
 function incorrectTemplate(){}
+
 function resultsTemplate(){}
 
 /********** RENDER FUNCTION(S) **********/
@@ -104,8 +142,62 @@ function resultsTemplate(){}
 function generatePageString(){}
 
 
-function renderPage(){}
+function renderQuestion() {
+  // render the question in the DOM
+  if (STORE.quizStarted) {
+    console.log('`renderQuestion` ran');
+    const questionString = questionTemplate();
+
+    // clear the html from the DOM
+    $('main').html('');
+    // insert that HTML into the DOM
+    $('main').html(questionString);
+  }
+}
+
+function renderStart() {
+  console.log('`renderStart` ran');
+  const startString = startTemplate();
+  // instert the HTML into the DOM
+  $('main').html(startString);
+
+}
 
 /********** EVENT HANDLER FUNCTIONS **********/
 
 // These functions handle events (submit, click, etc)
+
+function startGame(){
+  renderStart();
+  $('.submit').click( event => {
+    // moves out of the first screen, onto first question
+    STORE.quizStarted = true;
+  });
+}
+
+function getQuestion(){
+  const indexNum = STORE.questionNumber;
+  const quest = STORE.questions;
+  return quest[indexNum];
+}
+
+function getAnswer(){
+
+}
+
+function submitAnswer(){
+  const ans = getAnswer();
+}
+
+function wasRight(){
+  // if the answer is right, move on and show the correct render
+
+  // if the answer is wrong, move on and show the incorrect render
+}
+
+function nextQuestion(){
+
+  STORE.questionNumber += 1;
+}
+
+function restartGame(){}

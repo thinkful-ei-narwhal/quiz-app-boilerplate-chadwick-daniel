@@ -83,7 +83,7 @@ input {
   text-align: center;
 }
 
-input[type=submit] {
+input[type=button] {
   margin-top: 15px;
   margin-bottom: 45px;
   display: block;
@@ -100,7 +100,7 @@ input[type=submit] {
   cursor: pointer;
 }
 
-input[type=submit]:hover {
+input[type=button]:hover {
   background-color: rgb(96, 226, 100);
 }
 
