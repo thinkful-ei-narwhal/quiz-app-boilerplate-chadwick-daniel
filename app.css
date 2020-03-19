@@ -6,3 +6,87 @@
   * https://github.com/andreacardybailey/responsive_example/blob/master/styles/responsive-base.css 
   *
 */
+
+* {
+  box-sizing: border-box;
+}
+
+.main-nav-list {
+  list-style: none;
+  padding: 0;
+}
+.main-nav-list-item {
+  padding: .7rem 0;
+  text-align:center;
+  background-color: lime;
+  border: 1px solid #000;
+}
+
+.box {
+  background-color: pink;
+  border:1px solid blue;
+  margin: 10px 0;
+  padding:10px;
+}
+
+h1 {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-align: center;
+  direction: flex;
+  flex-direction: row;
+  margin-left: auto;
+  margin-right: auto;
+  width: 500px;
+  padding: 7.5px;
+  margin-top: 50px;
+  margin-bottom: 15px;
+  overflow-wrap: anywhere;
+}
+
+input {
+  display: block;
+  width: 320px;
+  height: 55px;
+  text-align: left;
+  padding: 7.5px;
+  margin-top: 7.5px;
+  margin-bottom: 15px;
+}
+
+input[type=submit] {
+  margin-top: 15px;
+  margin-bottom: 45px;
+  display: block;
+  border-radius: 8px;
+  background-color: rgb(175, 76, 76);
+  border: none;
+  color: white;
+  padding: 15px;
+  font-size: 24px;
+  text-emphasis: bold;
+  text-align: center;
+  width: 320px;
+  height: 55px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: rgb(96, 226, 100);
+}
+
+form {
+  background-color: white;
+  width: 400px;
+  padding-left: 40px;
+  padding-right: 40px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+fieldset {
+  padding: 0;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+  border: none;
+}

@@ -4,7 +4,7 @@
  * Example store structure
  */
 const STORE = {
-  // 5 or more questions are required
+  // 6 question quiz
   questions: [
     {
       question: 'What is the name of the village where the anime Naruto takes place?',
@@ -91,9 +91,20 @@ const STORE = {
 
 // These functions return HTML templates
 
+function startTemplate(){}
+function questionTemplate(){}
+function correctTemplate(){}
+function incorrectTemplate(){}
+function resultsTemplate(){}
+
 /********** RENDER FUNCTION(S) **********/
 
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
+
+function generatePageString(){}
+
+
+function renderPage(){}
 
 /********** EVENT HANDLER FUNCTIONS **********/
 
