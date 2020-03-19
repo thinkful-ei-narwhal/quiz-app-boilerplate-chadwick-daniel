@@ -93,8 +93,11 @@ const STORE = {
 
 
 function questionTemplate(){
+  // uses the this function to make a constant variable we can use
   const currQuest = getQuestion();
+  // we want to get the number of our current question so that it looks right in the h2 header
   const num = STORE.questionNumber + 1;
+  // we want the array that the answers are in so we can use them
   const answerArray = currQuest.answers;
   return `
     <h2>Question ${num}:</h2>
@@ -210,12 +213,15 @@ function resultsTemplate(){
 
 function renderPage() {
   console.log('`renderPage` ran');
+
+  // if our quiz is not started, put the start template onto the main.
+
   if (!(STORE.quizStarted)) {
     const startString = startTemplate();
     // instert the HTML into the DOM
     $('main').html(startString);
   } else {
-    // render the question in the DOM
+    // otherwise, render the question in the DOM
     const questionString = questionTemplate();
 
     // clear the html from the DOM
@@ -230,9 +236,17 @@ function renderPage() {
 // These functions handle events (submit, click, etc)
 
 function startGame(){
+
+  // render the page initially
+
   renderPage();
   $('.submit').click( event => {
     event.preventDefault();
+
+    // if it clicks, we change the quizStarted property of the STORE to true,
+    // then we render it again...this is supposed to start the questions...but
+    // isn't working.
+
     STORE.quizStarted = true;
     renderPage();
   });
@@ -240,14 +254,20 @@ function startGame(){
 }
 
 function getQuestion(){
+  // we want the store question number as an index number so we can use it as
+  // an index for finding our question
   const indexNum = STORE.questionNumber;
+  // save the Store.questions as an array
   const quest = STORE.questions;
+  // we find the index number of our current question
   return quest[indexNum];
 }
 
 function getAnswer(){
+  // this looks for a click on an answer class within the js form
   $('.js-form').on('click', '.answer', event => {
     event.preventDefault();
+    // we get the value of this click and store it (which choice we made)
     const val = $(event.currentTarget).first().val();
     console.log(val);
     return val;
@@ -255,6 +275,8 @@ function getAnswer(){
 }
 
 function submitAnswer(){
+  // we get our answer from before, and when we submit, we clear the page, 
+  // render a new page, and return the answer we selected.backlink
   const ans = getAnswer();
   $('.submit').click( event => {
     event.preventDefault();
@@ -265,15 +287,18 @@ function submitAnswer(){
 }
 
 function wasRight(){
-  const indexNum = STORE.questionNumber;
+  // we get the question object from the store.questions
   const quest = STORE.questions;
+  // we store the correctAnswer property from the question
   const answer = quest.correctAnswer;
+  // the submitted is a value that we check against our answer to see if
+  // it's true or false and we return it
   const submitted = submitAnswer();
   return (submitted === answer);
 }
 
 function nextQuestion(){
-
+  // working on this
   STORE.questionNumber += 1;
   renderPage();
 }
