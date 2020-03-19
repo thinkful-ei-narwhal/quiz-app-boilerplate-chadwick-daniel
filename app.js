@@ -102,13 +102,13 @@ function questionTemplate(){
 
     <form class="js-form">
       <fieldset>
-        <input type="radio" id="${answerArray[0]}" value="${answerArray[0]}">
+        <input type="radio" id="${answerArray[0]}" name="quiz" value="${answerArray[0]}">
         <label for="${answerArray[0]}">${answerArray[0]}</label>
-        <input type="radio" id="${answerArray[1]}" value="${answerArray[1]}">
+        <input type="radio" id="${answerArray[1]}" name="quiz" value="${answerArray[1]}">
         <label for="${answerArray[1]}">${answerArray[1]}</label>
-        <input type="radio" id="${answerArray[2]}" value="${answerArray[2]}">
+        <input type="radio" id="${answerArray[2]}" name="quiz" value="${answerArray[2]}">
         <label for="${answerArray[2]}">${answerArray[2]}</label>
-        <input type="radio" id="${answerArray[3]}" value="${answerArray[3]}">
+        <input type="radio" id="${answerArray[3]}" name="quiz" value="${answerArray[3]}">
         <label for="${answerArray[3]}">${answerArray[3]}</label>
         
         <label for="answer"></label>
@@ -129,20 +129,86 @@ function startTemplate(){
   `;
 }
 
-function correctTemplate(){}
+function correctTemplate(){
+  // this first part is so that we can show our score; the right amount is our score;
+  // the wrong amount is the question number we are on (so how many we've answered)
+  // minus the amount we have correct.
 
-function incorrectTemplate(){}
+  const right = STORE.score;
+  const wrong = ((STORE.questionNumber) - right);
+  return `
+    <h2>Correct!</h2>
 
-function resultsTemplate(){}
+      <h3>Score:</h3>
+      <p class="score">Right: ${right}</p>
+      <p class="score">Wrong: ${wrong}</p>
+
+      <form class="js-form">
+        <fieldset>
+            <label for="next"></label>
+            <input class="submit" type="button" id="next" value="Next">
+        </fieldset>
+      </form>
+  `;
+}
+
+function incorrectTemplate(){
+  // same thing
+  const right = STORE.score;
+  const wrong = ((STORE.questionNumber) - right);
+
+  // we need to get the correct answer from the question we are on
+  // (we will not move onto next until we press next)
+
+  const correctAns = 'thing';
+
+  return `
+    <h2>Incorrect!</h2>
+
+      <h3>The correct answer was: ${correctAns}</h3>
+
+      <h3>Score:</h3>
+      <p class="score">Right: ${right}p>
+      <p class="score">Wrong: ${wrong}</p>
+
+      <form class="js-form">
+        <fieldset>
+            <label for="next"></label>
+            <input class="submit" type="button" id="next" value="Next">
+        </fieldset>
+      </form>
+  `;
+}
+
+function resultsTemplate(){
+  // same thing
+  const right = STORE.score;
+  const wrong = ((STORE.questionNumber) - right);
+
+  return `
+    <h1>End of Quiz!</h1>
+
+      <h3>Score:</h3>
+      <p class="score">Right: ${right}p>
+      <p class="score">Wrong: ${wrong}</p>
+
+      <form class="js-form">
+        <fieldset>
+            <label for="new-game"></label>
+            <input class="submit" type="button" id="new-game" value="New Game">
+        </fieldset>
+      </form>
+  `;
+
+}
 
 /********** RENDER FUNCTION(S) **********/
 
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
 
-function generatePageString(){}
+// we need to make this ONE function
 
-
-function renderQuestion() {
+function renderPage() {
   // render the question in the DOM
   if (STORE.quizStarted) {
     console.log('`renderQuestion` ran');
@@ -170,6 +236,7 @@ function renderStart() {
 function startGame(){
   renderStart();
   $('.submit').click( event => {
+    event.preventDefault();
     // moves out of the first screen, onto first question
     STORE.quizStarted = true;
   });
@@ -187,6 +254,11 @@ function getAnswer(){
 
 function submitAnswer(){
   const ans = getAnswer();
+  $('.submit').click( event => {
+    event.preventDefault();
+    $('main').html('');
+    return ans;
+  });
 }
 
 function wasRight(){
