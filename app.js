@@ -5,6 +5,8 @@
  */
 const STORE = {
   // 6 question quiz
+
+  // daniel, and this is in an array, in an object, in an array?
   questions: [
     {
       question: 'What is the name of the village where the anime Naruto takes place?',
@@ -120,7 +122,7 @@ function questionTemplate(){
     </form> 
   `;
 }
-
+//daniel, i don't understand what this does --chadwick
 function startTemplate(){
   return `
     <form class="js-form">
@@ -163,7 +165,7 @@ function incorrectTemplate(){
   // we need to get the correct answer from the question we are on
   // (we will not move onto next until we press next)
 
-  const correctAns = 'thing';
+  const correctAns = 'thing';  //daniel, shouldn't this be set to some kind of function that reveals the right answer?
 
   return `
     <h2>Incorrect!</h2>
@@ -211,6 +213,8 @@ function resultsTemplate(){
 
 // we need to make this ONE function
 
+//so daniel, this function should return the greyframe html code for the next consecutive question, right?
+
 function renderPage() {
   console.log('`renderPage` ran');
 
@@ -247,6 +251,11 @@ function startGame(){
     // then we render it again...this is supposed to start the questions...but
     // isn't working.
 
+    // daniel, isn't this only part of it though? i know that the default action of any submit button is to 
+    // submit to a new page, or even the same page. the prevent default merely stops that from happening,
+    // but doesn't do anything else. so we still need to get the function to display the initial hmtl, right?
+    // isn't there another part to this function we have to write?
+
     STORE.quizStarted = true;
     renderPage();
   });
@@ -256,6 +265,9 @@ function startGame(){
 function getQuestion(){
   // we want the store question number as an index number so we can use it as
   // an index for finding our question
+
+  //daniel, since indexes start from 0, shouldn't we somehow have to put a -1 in here somehow?
+
   const indexNum = STORE.questionNumber;
   // save the Store.questions as an array
   const quest = STORE.questions;
@@ -268,6 +280,8 @@ function getAnswer(){
   $('.js-form').on('click', '.answer', event => {
     event.preventDefault();
     // we get the value of this click and store it (which choice we made)
+
+    
     const val = $(event.currentTarget).first().val();
     console.log(val);
     return val;
@@ -280,7 +294,7 @@ function submitAnswer(){
   const ans = getAnswer();
   $('.submit').click( event => {
     event.preventDefault();
-    $('main').html('');
+    $('main').html('');    //daniel, this line clears the page, right?
     renderPage();
     return ans;
   });
@@ -309,6 +323,8 @@ function restartGame(){}
 
 
 // this function will be our callback when the page loads.
+
+//daniel, so this function returns two functions, right?
 
 function handleAll() {
   startGame();
