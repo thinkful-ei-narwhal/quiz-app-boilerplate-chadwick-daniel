@@ -295,7 +295,7 @@ function startGame(){
 
 function handleSubmitAnswer(){
   // we listen for the submit to get our answer from the radio button
-  $('#ans').click( function(event) {
+  $('.js-form').on('click', '#ans', function(event) {
     event.preventDefault();
     const val = $(event.currentTarget).val();
     console.log(val);  
@@ -306,7 +306,7 @@ function handleSubmitAnswer(){
 }
 
 function handleStartClick() {
-  $('#start').click( function(event) {
+  $('.js-form').on('click', '#start', function(event) {
     console.log(event);
     event.preventDefault();
     STORE.isQuestion = true;
@@ -316,7 +316,7 @@ function handleStartClick() {
 }
 
 function handleNextClick(){
-  $('#next').on( function(event) {
+  $('.js-form').on('click', '#next', function(event) {
     event.preventDefault();
     STORE.questionNumber += 1;
     STORE.isQuestion = true;
@@ -325,7 +325,7 @@ function handleNextClick(){
 }
 
 function handleRestartGameClick(){
-  $('#new-game').on( function(event) {
+  $('.js-form').on('click', '#new-game', function(event) {
     event.preventDefault();
     STORE.questionNumber = 0;
     STORE.isQuestion = false;
