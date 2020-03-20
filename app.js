@@ -6,7 +6,6 @@
 const STORE = {
   // 6 question quiz
 
-  // daniel, and this is in an array, in an object, in an array?
   questions: [
     {
       question: 'What is the name of the village where the anime Naruto takes place?',
@@ -76,21 +75,6 @@ const STORE = {
   score: 0
 };
 
-/**
- * 
- * Technical requirements:
- * 
- * Your app should include a render() function, that regenerates the view each time the store is updated. 
- * See your course material, consult your instructor, and reference the slides for more details.
- *
- * NO additional HTML elements should be added to the index.html file.
- *
- * You may add attributes (classes, ids, etc) to the existing HTML elements, or link stylesheets or additional scripts if necessary
- *
- * SEE BELOW FOR THE CATEGORIES OF THE TYPES OF FUNCTIONS YOU WILL BE CREATING 👇
- * 
- */
-
 /********** GENERAL FUNCTIONS **********/
 
 // These functions assist us with other functions
@@ -135,7 +119,9 @@ function questionTemplate(){
   // we want to get the number of our current question so that it looks right in the h2 header
   let num = STORE.questionNumber + 1;
   // we want the array that the answers are in so we can use them
+  
   let answerArray = currQuest.answers;
+  
   // we probably want a loop that handles the radio answer thing here...its just way less lines
   
   const gifArr = [
@@ -173,6 +159,7 @@ function questionTemplate(){
       </form> 
     </div>
   `;
+  
 }
 
 function correctTemplate(){
@@ -308,7 +295,7 @@ function renderPage() {
       // insert that HTML into the DOM
       $('main').html(incorrectTemplate());
     }
-  } else if ((STORE.questionNumber > STORE.questions.length) && (STORE.quizStarted)) {
+  } else if ((STORE.questionNumber > STORE.questions.length) && (STORE.quizStarted) && !(STORE.isQuestion)) {
     // show results screen
     $('main').html('');
     // insert that HTML into the DOM
@@ -367,8 +354,12 @@ function handleSubmitAnswer(){
 function handleNextClick(){
   $('main').on('click', '#next', function(event) {
     event.preventDefault();
-    STORE.questionNumber += 1;
-    STORE.isQuestion = true;
+    if (STORE.questionNumber < STORE.questions.length) {
+      STORE.questionNumber += 1;
+      STORE.isQuestion = true;
+    } else {
+      STORE.isQuestion = false;
+    }
     renderPage();
   });
 }
