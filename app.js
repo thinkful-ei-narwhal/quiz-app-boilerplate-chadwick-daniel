@@ -66,9 +66,10 @@ const STORE = {
         'Gura Gura no Mi',
         'Mera Mera no Mi'
       ],
-      correctAnswer: 'Gomu Gomu no Mi'
+      correctAnswer: 'Gomu Gomo no Mi'
     }
   ],
+  isCorrect: true,
   isQuestion: false,
   quizStarted: false,
   questionNumber: 0,
@@ -106,20 +107,6 @@ function getQuestion(){
   return quest[indexNum];
 }
 
-function wasRight(){
-  
-  let answer = getQuestion().correctAnswer;
-  console.log(answer);
-  console.log(typeof(answer));
-  console.log(handleSubmitAnswer());
-  // the submitted is a value that we check against our answer to see if
-  // it's true or false and we return it
-  if (handleSubmitAnswer() === answer) {
-    STORE.score += 1;
-  }
-  return (handleSubmitAnswer() === answer);
-}
-
 /********** TEMPLATE GENERATION FUNCTIONS **********/
 
 // These functions return HTML templates
@@ -127,7 +114,7 @@ function wasRight(){
 function startTemplate(){
   return `
     <div class="cutegif">
-      <img src="https://data.whicdn.com/images/289130893/original.gif" alt="Naruto's Village" width=200px>
+      <img src="https://data.whicdn.com/images/289130893/original.gif" alt="Naruto's Village" width=300px>
     </div>
 
     <div>
@@ -150,13 +137,22 @@ function questionTemplate(){
   // we want the array that the answers are in so we can use them
   let answerArray = currQuest.answers;
   // we probably want a loop that handles the radio answer thing here...its just way less lines
-  // we may want to change the img src to a variable and have it choose from an array matching the gif for the question.
+  
+  const gifArr = [
+    '<img src="https://media1.tenor.com/images/357aa02bb868b08546ea4f60d2a2299b/tenor.gif" alt="naurto face" width=400px>',
+    '<img src="https://media.tenor.com/images/0b0010b6da27502d1a0a320c73eb07af/tenor.gif" alt="megumin face being pulled on" width=400px>',
+    '<img src="https://data.whicdn.com/images/241804269/original.gif" alt="erin spitting water" width=400px>',
+    '<img src="https://gifimage.net/wp-content/uploads/2017/08/saitama-one-punch-man-gif-14.gif" alt="luffy is confused" width=400px>',
+    '<img src="https://media0.giphy.com/media/3ofRH40qYdZQwaq1Vh/giphy.gif?cid=790b7611b0832d98f46c342da57ef2a46bed8cd8ae9797f4&rid=giphy.gif" alt="wind spirit pulling on face" width=400px>',
+    '<img src="https://media0.giphy.com/media/XAZpfo9whz6nu/source.gif" alt="luffy is confused" width=400px>',
+  ];
+
   return `
     <h2>Question ${num}:</h2>
     <p>${currQuest.question}</p>
 
     <div class="cutegif">
-      <img src="https://media0.giphy.com/media/XAZpfo9whz6nu/source.gif" alt="luffy is confused" width=200px>
+      ${gifArr[STORE.questionNumber]}
     </div>
 
     <div class="form">
@@ -190,7 +186,7 @@ function correctTemplate(){
     <h2>Correct!</h2>
 
     <div class="cutegif">
-      <img src="https://media.giphy.com/media/Diym3aZO1dHzO/giphy.gif" alt="Rei clapping" width=200px>
+      <img src="https://media.giphy.com/media/Diym3aZO1dHzO/giphy.gif" alt="Rei clapping" width=400px>
     </div>
 
     <div class="score">
@@ -213,7 +209,7 @@ function correctTemplate(){
 function incorrectTemplate(){
   // same thing
   let right = STORE.score;
-  let wrong = ((STORE.questionNumber) - right);
+  let wrong = ((STORE.questionNumber +1) - right);
 
   // we need to get the correct answer from the question we are on
   // (we will not move onto next until we press next)
@@ -229,7 +225,7 @@ function incorrectTemplate(){
     <h3>The correct answer was: ${correctAns}</h3>
 
     <div class="cutegif">
-      <img src="https://thumbs.gfycat.com/MeaslyJaggedBrontosaurus-size_restricted.gif" alt="aqua crying" width=200px>
+      <img src="https://thumbs.gfycat.com/MeaslyJaggedBrontosaurus-size_restricted.gif" alt="aqua crying" width=400px>
     </div>
 
     <div class="score">
@@ -252,7 +248,7 @@ function incorrectTemplate(){
 function resultsTemplate(){
   // same thing
   let right = STORE.score;
-  let wrong = ((STORE.questionNumber) - right);
+  let wrong = ((STORE.questionNumber +1) - right);
 
   return `
     <h1>End of Quiz!</h1>
@@ -264,7 +260,7 @@ function resultsTemplate(){
     </div>
 
     <div class="cutegif">
-      <img src="https://media.giphy.com/media/EktbegF3J8QIo/giphy.gif" alt="pikachu and togepi with party hats" width=200px>
+      <img src="https://media.giphy.com/media/EktbegF3J8QIo/giphy.gif" alt="pikachu and togepi with party hats" width=400px>
     </div>
 
     <div class="form">
@@ -301,7 +297,7 @@ function renderPage() {
     // insert that HTML into the DOM
     $('main').html(questionTemplate());
   } else if ((STORE.quizStarted) && !(STORE.isQuestion)) {
-    if (wasRight() === true) {
+    if (STORE.isCorrect) {
       // clear the html from the DOM
       $('main').html('');
       // insert that HTML into the DOM
@@ -344,14 +340,26 @@ function handleSubmitAnswer(){
     console.log(event);
     event.preventDefault();
     let answer = $("input[name='quiz']:checked").val();
-    console.log(answer);
-    console.log(typeof(answer));
+    
     if (answer) {
       STORE.isQuestion = false;
       STORE.quizStarted = true;
-      renderPage();
+      
     }
-    return answer;
+    console.log(answer);
+    console.log(typeof(answer));
+    
+    let realAnswer = getQuestion().correctAnswer;
+  
+    // the submitted is a value that we check against our answer to see if
+    // it's true or false and we return it
+    if (answer === realAnswer) {
+      STORE.score += 1;
+      STORE.isCorrect = true;
+    } else {
+      STORE.isCorrect = false;
+    }
+    renderPage();
   });
   
 }
