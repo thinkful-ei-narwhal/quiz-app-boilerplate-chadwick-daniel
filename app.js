@@ -127,6 +127,19 @@ function questionTemplate(){
   // we want the array that the answers are in so we can use them
 
   let answerArray = currQuest.answers;
+
+  let radioQuestions = answerArray.map(el => {
+    let s = '';
+    s += `
+    <div class=fix>
+    <input class="answer" type="radio" id="${el}" name="quiz" value="${el}">
+    <label for="${el}">${el}</label>
+    </div>
+    `;
+    return s;
+  }).join('');
+
+
   
   // we probably want a loop that handles the radio answer thing here...its just way less lines
   
@@ -150,15 +163,7 @@ function questionTemplate(){
     <div class="form">
       <form class="js-form">
         <fieldset class="radio">
-          <input class="answer" type="radio" id="${answerArray[0]}" name="quiz" value="${answerArray[0]}">
-          <label for="${answerArray[0]}">${answerArray[0]}</label>
-          <input class="answer" type="radio" id="${answerArray[1]}" name="quiz" value="${answerArray[1]}">
-          <label for="${answerArray[1]}">${answerArray[1]}</label>
-          <input class="answer" type="radio" id="${answerArray[2]}" name="quiz" value="${answerArray[2]}">
-          <label for="${answerArray[2]}">${answerArray[2]}</label>
-          <input class="answer" type="radio" id="${answerArray[3]}" name="quiz" value="${answerArray[3]}">
-          <label for="${answerArray[3]}">${answerArray[3]}</label>
-          
+          ${radioQuestions}
           <label for="ans"></label>
           <input type="submit" id="ans" value="Submit">
       </fieldset>
