@@ -31,7 +31,7 @@ h3 {
   margin-right: auto;
   width: 500px;
   padding: 7.5px;
-  margin-top: 15px;
+  margin-top: 2px;
   margin-bottom: 15px;
   overflow-wrap: anywhere;
 }
@@ -41,9 +41,9 @@ p {
   margin-left: auto;
   margin-right: auto;
   width: 200px;
-  padding: 7.5px;
-  margin-top: 15px;
-  margin-bottom: 30px;
+  padding: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   overflow-wrap: anywhere;
 }
 
@@ -140,7 +140,7 @@ fieldset {
 
   p {
     width: 340px;
-    margin-bottom: 45px;
+    margin-bottom: 15px;
   }
 }
 
@@ -161,6 +161,6 @@ fieldset {
 
   p {
     width: 500px;
-    margin-bottom: 50px;
+    margin-bottom: 15px;
   }
 }

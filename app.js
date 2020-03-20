@@ -82,10 +82,15 @@ const STORE = {
 function getQuestion(){
   // we want the store question number as an index number so we can use it as
   // an index for finding our question
+
   let indexNum = STORE.questionNumber;
+
   // save the Store.questions as an array
+
   let quest = STORE.questions;
+
   // we find the index number of our current question
+
   return quest[indexNum];
 }
 
@@ -112,10 +117,15 @@ function startTemplate(){
 
 function questionTemplate(){
   // uses the this function to make a constant variable we can use
+
   let currQuest = getQuestion();
+
   // we want to get the number of our current question so that it looks right in the h2 header
+
   let num = STORE.questionNumber + 1;
+
   // we want the array that the answers are in so we can use them
+
   let answerArray = currQuest.answers;
   
   // we probably want a loop that handles the radio answer thing here...its just way less lines
@@ -163,8 +173,6 @@ function correctTemplate(){
   // minus the amount we have correct.
 
   let right = STORE.score;
-  console.log(right);
-  console.log(STORE.questionNumber);
   let wrong = ((STORE.questionNumber + 1) - right);
   return `
     <h2>Correct!</h2>
@@ -199,7 +207,9 @@ function incorrectTemplate(){
   // (we will not move onto next until we press next)
 
   let currQuest = getQuestion();
+
   // we want the correctAnswer property
+
   let correctAns = currQuest.correctAnswer;
 
   return `
@@ -265,34 +275,23 @@ function resultsTemplate(){
 // we need to make this ONE function
 
 function renderPage() {
-  console.log('`renderPage` ran');
-
   // if our quiz is not started, put the start template onto the main.
 
   if ((STORE.questionNumber === STORE.questions.length - 1) && (STORE.quizStarted) && !(STORE.isQuestion)) {
     // show results screen
-    $('main').html('');
-    // insert that HTML into the DOM
     $('main').html(resultsTemplate());
   }
   else if (!(STORE.quizStarted) && !(STORE.isQuestion)) {
-    // instert the HTML into the DOM
+    // insert the HTML into the DOM
     $('main').html(startTemplate());
   } else if ((STORE.quizStarted) && (STORE.isQuestion)) {
-    // otherwise, render the question in the DOM
-    // clear the html from the DOM
-    $('main').html('');
-    // insert that HTML into the DOM
+    // render the question in the DOM
     $('main').html(questionTemplate());
   } else if ((STORE.quizStarted) && !(STORE.isQuestion)) {
     if (STORE.isCorrect) {
-      // clear the html from the DOM
-      $('main').html('');
       // insert that HTML into the DOM
       $('main').html(correctTemplate());
     } else {
-      // clear the html from the DOM
-      $('main').html('');
       // insert that HTML into the DOM
       $('main').html(incorrectTemplate());
     }
@@ -348,9 +347,7 @@ function handleNextClick(){
     event.preventDefault();
     if (STORE.questionNumber <= STORE.questions.length - 1) {
       STORE.questionNumber += 1;
-      console.log(STORE.questionNumber);
       STORE.isQuestion = true;
-      console.log(STORE.questionNumber);
     } else {
       STORE.questionNumber += 1;
       STORE.isQuestion = false;
@@ -362,11 +359,12 @@ function handleNextClick(){
 function handleRestartGameClick(){
   $('main').on('click', '#new-game', function(event) {
     event.preventDefault();
+    // reset the STORE
     STORE.questionNumber = 0;
     STORE.isQuestion = false;
     STORE.quizStarted = false;
     STORE.isCorrect = true;
-    STORE.Score = 0;
+    STORE.score = 0;
     renderPage();
   });
 }
