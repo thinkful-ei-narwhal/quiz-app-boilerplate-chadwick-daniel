@@ -145,7 +145,7 @@ function questionTemplate(){
         <input class="answer" type="radio" id="${answerArray[3]}" name="quiz" value="${answerArray[3]}">
         <label for="${answerArray[3]}">${answerArray[3]}</label>
         
-        <label for="answer"></label>
+        <label for="ans"></label>
         <input class="submit" type="button" id="ans" value="Submit">
     </fieldset>
     </form> 
