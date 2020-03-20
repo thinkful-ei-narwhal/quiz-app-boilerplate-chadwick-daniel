@@ -316,7 +316,7 @@ function handleStartClick() {
 }
 
 function handleNextClick(){
-  $('#next').click( function(event) {
+  $('#next').on( function(event) {
     event.preventDefault();
     STORE.questionNumber += 1;
     STORE.isQuestion = true;
@@ -325,7 +325,7 @@ function handleNextClick(){
 }
 
 function handleRestartGameClick(){
-  $('#new-game').click( function(event) {
+  $('#new-game').on( function(event) {
     event.preventDefault();
     STORE.questionNumber = 0;
     STORE.isQuestion = false;
