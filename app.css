@@ -118,9 +118,6 @@ fieldset {
   border: none;
 }
 
-input[type=radio] {
-  
-}
 
 @media (min-width: 700px) { /* Medium Screen */
   body {

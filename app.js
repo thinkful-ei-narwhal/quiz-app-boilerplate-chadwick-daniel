@@ -97,22 +97,26 @@ const STORE = {
 function getQuestion(){
   // we want the store question number as an index number so we can use it as
   // an index for finding our question
-  const indexNum = STORE.questionNumber;
+  let indexNum = STORE.questionNumber;
   console.log(indexNum);
   // save the Store.questions as an array
-  const quest = STORE.questions;
+  let quest = STORE.questions;
   console.log(quest);
   // we find the index number of our current question
   return quest[indexNum];
 }
 
 function wasRight(){
-  // we get the question object from the store.questions
-  const quest = STORE.questions;
-  // we store the correctAnswer property from the question
-  const answer = quest.correctAnswer;
+  
+  let answer = getQuestion().correctAnswer;
+  console.log(answer);
+  console.log(typeof(answer));
+  console.log(handleSubmitAnswer());
   // the submitted is a value that we check against our answer to see if
   // it's true or false and we return it
+  if (handleSubmitAnswer() === answer) {
+    STORE.score += 1;
+  }
   return (handleSubmitAnswer() === answer);
 }
 
@@ -139,12 +143,13 @@ function startTemplate(){
 
 function questionTemplate(){
   // uses the this function to make a constant variable we can use
-  const currQuest = getQuestion();
+  let currQuest = getQuestion();
   console.log(currQuest);
   // we want to get the number of our current question so that it looks right in the h2 header
-  const num = STORE.questionNumber + 1;
+  let num = STORE.questionNumber + 1;
   // we want the array that the answers are in so we can use them
-  const answerArray = currQuest.answers;
+  let answerArray = currQuest.answers;
+  // we probably want a loop that handles the radio answer thing here...its just way less lines
   // we may want to change the img src to a variable and have it choose from an array matching the gif for the question.
   return `
     <h2>Question ${num}:</h2>
@@ -179,8 +184,8 @@ function correctTemplate(){
   // the wrong amount is the question number we are on (so how many we've answered)
   // minus the amount we have correct.
 
-  const right = STORE.score;
-  const wrong = ((STORE.questionNumber) - right);
+  let right = STORE.score;
+  let wrong = ((STORE.questionNumber + 1) - right);
   return `
     <h2>Correct!</h2>
 
@@ -207,16 +212,16 @@ function correctTemplate(){
 
 function incorrectTemplate(){
   // same thing
-  const right = STORE.score;
-  const wrong = ((STORE.questionNumber) - right);
+  let right = STORE.score;
+  let wrong = ((STORE.questionNumber) - right);
 
   // we need to get the correct answer from the question we are on
   // (we will not move onto next until we press next)
 
-  const currQuest = getQuestion();
+  let currQuest = getQuestion();
   console.log(currQuest);
   // we want the correctAnswer property
-  const correctAns = currQuest.correctAnswer;
+  let correctAns = currQuest.correctAnswer;
 
   return `
     <h2>Incorrect!</h2>
@@ -229,7 +234,7 @@ function incorrectTemplate(){
 
     <div class="score">
       <h3>Score:</h3>
-      <p class="score">Right: ${right}p>
+      <p class="score">Right: ${right}<p>
       <p class="score">Wrong: ${wrong}</p>
     </div>
 
@@ -246,8 +251,8 @@ function incorrectTemplate(){
 
 function resultsTemplate(){
   // same thing
-  const right = STORE.score;
-  const wrong = ((STORE.questionNumber) - right);
+  let right = STORE.score;
+  let wrong = ((STORE.questionNumber) - right);
 
   return `
     <h1>End of Quiz!</h1>
@@ -282,6 +287,7 @@ function resultsTemplate(){
 
 function renderPage() {
   console.log('`renderPage` ran');
+  console.log(getQuestion());
 
   // if our quiz is not started, put the start template onto the main.
 
@@ -295,7 +301,7 @@ function renderPage() {
     // insert that HTML into the DOM
     $('main').html(questionTemplate());
   } else if ((STORE.quizStarted) && !(STORE.isQuestion)) {
-    if (wasRight()) {
+    if (wasRight() === true) {
       // clear the html from the DOM
       $('main').html('');
       // insert that HTML into the DOM
@@ -306,7 +312,7 @@ function renderPage() {
       // insert that HTML into the DOM
       $('main').html(incorrectTemplate());
     }
-  } else if (STORE.questionNumber > STORE.questions.length) {
+  } else if ((STORE.questionNumber > STORE.questions.length) && (STORE.quizStarted)) {
     // show results screen
     $('main').html('');
     // insert that HTML into the DOM
@@ -323,7 +329,7 @@ function renderPage() {
 
 
 function handleStartClick() {
-  $('.js-form').on('click', '#start', function(event) {
+  $('main').on('click', '#start', function(event) {
     console.log(event);
     event.preventDefault();
     STORE.isQuestion = true;
@@ -334,23 +340,24 @@ function handleStartClick() {
 
 function handleSubmitAnswer(){
   // we listen for the submit to get our answer from the radio button
-  $('.js-form').on('submit', '#ans', function(event) {
+  $('main').on('submit', '.js-form', function(event) {
     console.log(event);
     event.preventDefault();
-    const val = $(event.currentTarget).val();
-    console.log(val);
-    if (val) {
+    let answer = $("input[name='quiz']:checked").val();
+    console.log(answer);
+    console.log(typeof(answer));
+    if (answer) {
       STORE.isQuestion = false;
       STORE.quizStarted = true;
       renderPage();
     }
-    return val;
+    return answer;
   });
   
 }
 
 function handleNextClick(){
-  $('.js-form').on('click', '#next', function(event) {
+  $('main').on('click', '#next', function(event) {
     event.preventDefault();
     STORE.questionNumber += 1;
     STORE.isQuestion = true;
@@ -359,7 +366,7 @@ function handleNextClick(){
 }
 
 function handleRestartGameClick(){
-  $('.js-form').on('click', '#new-game', function(event) {
+  $('main').on('click', '#new-game', function(event) {
     event.preventDefault();
     STORE.questionNumber = 0;
     STORE.isQuestion = false;
