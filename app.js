@@ -69,6 +69,7 @@ const STORE = {
       correctAnswer: 'Gomu Gomu no Mi'
     }
   ],
+  isQuestion: false,
   quizStarted: false,
   questionNumber: 0,
   score: 0
@@ -122,7 +123,7 @@ function questionTemplate(){
     </form> 
   `;
 }
-//daniel, i don't understand what this does --chadwick
+
 function startTemplate(){
   return `
     <form class="js-form">
@@ -220,11 +221,11 @@ function renderPage() {
 
   // if our quiz is not started, put the start template onto the main.
 
-  if (!(STORE.quizStarted)) {
+  if (!(STORE.quizStarted) && !(STORE.isQuestion)) {
     const startString = startTemplate();
     // instert the HTML into the DOM
     $('main').html(startString);
-  } else {
+  } else if ((STORE.quizStarted) && (STORE.isQuestion)) {
     // otherwise, render the question in the DOM
     const questionString = questionTemplate();
 
@@ -232,8 +233,13 @@ function renderPage() {
     $('main').html('');
     // insert that HTML into the DOM
     $('main').html(questionString);
+  } else if ((STORE.quizStarted) && !(STORE.isQuestion)) {
+    // show the correct and incorrect page
+  } else {
+    // show results screen
   }
 }
+
 
 /********** EVENT HANDLER FUNCTIONS **********/
 
@@ -244,18 +250,10 @@ function startGame(){
   // render the page initially
 
   renderPage();
-  $('.submit').click( event => {
-    event.preventDefault();
-
-    // if it clicks, we change the quizStarted property of the STORE to true,
-    // then we render it again...this is supposed to start the questions...but
-    // isn't working.
-
-    // daniel, isn't this only part of it though? i know that the default action of any submit button is to 
-    // submit to a new page, or even the same page. the prevent default merely stops that from happening,
-    // but doesn't do anything else. so we still need to get the function to display the initial hmtl, right?
-    // isn't there another part to this function we have to write?
-
+  $('.submit').click( function(event) {
+    console.log(event);
+    $(event.currentTarget).preventDefault();
+    STORE.isQuestion = true;
     STORE.quizStarted = true;
     renderPage();
   });
@@ -265,8 +263,6 @@ function startGame(){
 function getQuestion(){
   // we want the store question number as an index number so we can use it as
   // an index for finding our question
-
-  //daniel, since indexes start from 0, shouldn't we somehow have to put a -1 in here somehow?
 
   const indexNum = STORE.questionNumber;
   // save the Store.questions as an array
@@ -281,7 +277,6 @@ function getAnswer(){
     event.preventDefault();
     // we get the value of this click and store it (which choice we made)
 
-    
     const val = $(event.currentTarget).first().val();
     console.log(val);
     return val;
@@ -323,8 +318,6 @@ function restartGame(){}
 
 
 // this function will be our callback when the page loads.
-
-//daniel, so this function returns two functions, right?
 
 function handleAll() {
   startGame();
