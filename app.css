@@ -47,6 +47,11 @@ p {
   overflow-wrap: anywhere;
 }
 
+.cutegif {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
 .score {
   text-align: center;
   margin-left: auto;
@@ -58,13 +63,16 @@ p {
   overflow-wrap: anywhere;
 }
 
-input {
-  display: block;
-  height: 55px;
-  text-align: center;
+.radio {
+  display: flex;
+  flex-direction: column;
 }
 
-input[type=button] {
+.answer {
+  display: inline;
+}
+
+input[type=button], input[type=submit] {
   margin-top: 15px;
   margin-bottom: 45px;
   display: block;
@@ -87,6 +95,10 @@ input[type=button]:hover {
   background-color: rgb(96, 226, 100);
 }
 
+input[type=submit]:hover {
+  background-color: rgb(96, 226, 100);
+}
+
 form {
   background-color: white;
   width: 400px;
@@ -104,6 +116,10 @@ fieldset {
   margin-left: auto;
   margin-right: auto;
   border: none;
+}
+
+input[type=radio] {
+  
 }
 
 @media (min-width: 700px) { /* Medium Screen */

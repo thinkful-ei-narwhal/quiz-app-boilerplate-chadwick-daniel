@@ -113,14 +113,29 @@ function wasRight(){
   const answer = quest.correctAnswer;
   // the submitted is a value that we check against our answer to see if
   // it's true or false and we return it
-  const submitted = handleSubmitAnswer();
-  return (submitted === answer);
+  return (handleSubmitAnswer() === answer);
 }
 
 /********** TEMPLATE GENERATION FUNCTIONS **********/
 
 // These functions return HTML templates
 
+function startTemplate(){
+  return `
+    <div class="cutegif">
+      <img src="https://data.whicdn.com/images/289130893/original.gif" alt="Naruto's Village" width=200px>
+    </div>
+
+    <div>
+      <form class="js-form">
+          <fieldset>
+              <label for="start"></label>
+              <input class="submit" type="button" id="start" value="START!">
+          </fieldset>
+      </form>
+    </div>
+  `;
+}
 
 function questionTemplate(){
   // uses the this function to make a constant variable we can use
@@ -130,36 +145,32 @@ function questionTemplate(){
   const num = STORE.questionNumber + 1;
   // we want the array that the answers are in so we can use them
   const answerArray = currQuest.answers;
+  // we may want to change the img src to a variable and have it choose from an array matching the gif for the question.
   return `
     <h2>Question ${num}:</h2>
     <p>${currQuest.question}</p>
 
-    <form class="js-form">
-      <fieldset>
-        <input class="answer" type="radio" id="${answerArray[0]}" name="quiz" value="${answerArray[0]}">
-        <label for="${answerArray[0]}">${answerArray[0]}</label>
-        <input class="answer" type="radio" id="${answerArray[1]}" name="quiz" value="${answerArray[1]}">
-        <label for="${answerArray[1]}">${answerArray[1]}</label>
-        <input class="answer" type="radio" id="${answerArray[2]}" name="quiz" value="${answerArray[2]}">
-        <label for="${answerArray[2]}">${answerArray[2]}</label>
-        <input class="answer" type="radio" id="${answerArray[3]}" name="quiz" value="${answerArray[3]}">
-        <label for="${answerArray[3]}">${answerArray[3]}</label>
-        
-        <label for="ans"></label>
-        <input class="submit" type="button" id="ans" value="Submit">
-    </fieldset>
-    </form> 
-  `;
-}
+    <div class="cutegif">
+      <img src="https://media0.giphy.com/media/XAZpfo9whz6nu/source.gif" alt="luffy is confused" width=200px>
+    </div>
 
-function startTemplate(){
-  return `
-    <form class="js-form">
-        <fieldset>
-            <label for="start"></label>
-            <input class="submit" type="button" id="start" value="START!">
-        </fieldset>
-    </form>
+    <div class="form">
+      <form class="js-form">
+        <fieldset class="radio">
+          <input class="answer" type="radio" id="${answerArray[0]}" name="quiz" value="${answerArray[0]}">
+          <label for="${answerArray[0]}">${answerArray[0]}</label>
+          <input class="answer" type="radio" id="${answerArray[1]}" name="quiz" value="${answerArray[1]}">
+          <label for="${answerArray[1]}">${answerArray[1]}</label>
+          <input class="answer" type="radio" id="${answerArray[2]}" name="quiz" value="${answerArray[2]}">
+          <label for="${answerArray[2]}">${answerArray[2]}</label>
+          <input class="answer" type="radio" id="${answerArray[3]}" name="quiz" value="${answerArray[3]}">
+          <label for="${answerArray[3]}">${answerArray[3]}</label>
+          
+          <label for="ans"></label>
+          <input type="submit" id="ans" value="Submit">
+      </fieldset>
+      </form> 
+    </div>
   `;
 }
 
@@ -173,16 +184,24 @@ function correctTemplate(){
   return `
     <h2>Correct!</h2>
 
+    <div class="cutegif">
+      <img src="https://media.giphy.com/media/Diym3aZO1dHzO/giphy.gif" alt="Rei clapping" width=200px>
+    </div>
+
+    <div class="score">
       <h3>Score:</h3>
       <p class="score">Right: ${right}</p>
       <p class="score">Wrong: ${wrong}</p>
+    </div>
 
+    <div class="form">
       <form class="js-form">
         <fieldset>
             <label for="next"></label>
             <input class="submit" type="button" id="next" value="Next">
         </fieldset>
       </form>
+    </div>
   `;
 }
 
@@ -194,23 +213,34 @@ function incorrectTemplate(){
   // we need to get the correct answer from the question we are on
   // (we will not move onto next until we press next)
 
-  const correctAns = 'thing';  //daniel, shouldn't this be set to some kind of function that reveals the right answer?
+  const currQuest = getQuestion();
+  console.log(currQuest);
+  // we want the correctAnswer property
+  const correctAns = currQuest.correctAnswer;
 
   return `
     <h2>Incorrect!</h2>
 
-      <h3>The correct answer was: ${correctAns}</h3>
+    <h3>The correct answer was: ${correctAns}</h3>
 
+    <div class="cutegif">
+      <img src="https://thumbs.gfycat.com/MeaslyJaggedBrontosaurus-size_restricted.gif" alt="aqua crying" width=200px>
+    </div>
+
+    <div class="score">
       <h3>Score:</h3>
       <p class="score">Right: ${right}p>
       <p class="score">Wrong: ${wrong}</p>
+    </div>
 
+    <div class="form">
       <form class="js-form">
         <fieldset>
             <label for="next"></label>
             <input class="submit" type="button" id="next" value="Next">
         </fieldset>
       </form>
+    </div>
   `;
 }
 
@@ -222,16 +252,24 @@ function resultsTemplate(){
   return `
     <h1>End of Quiz!</h1>
 
+    <div class="score">
       <h3>Score:</h3>
       <p class="score">Right: ${right}p>
       <p class="score">Wrong: ${wrong}</p>
+    </div>
 
+    <div class="cutegif">
+      <img src="https://media.giphy.com/media/EktbegF3J8QIo/giphy.gif" alt="pikachu and togepi with party hats" width=200px>
+    </div>
+
+    <div class="form">
       <form class="js-form">
         <fieldset>
             <label for="new-game"></label>
             <input class="submit" type="button" id="new-game" value="New Game">
         </fieldset>
       </form>
+    </div>
   `;
 
 }
@@ -248,38 +286,31 @@ function renderPage() {
   // if our quiz is not started, put the start template onto the main.
 
   if (!(STORE.quizStarted) && !(STORE.isQuestion)) {
-    const startString = startTemplate();
     // instert the HTML into the DOM
-    $('main').html(startString);
+    $('main').html(startTemplate());
   } else if ((STORE.quizStarted) && (STORE.isQuestion)) {
     // otherwise, render the question in the DOM
-    const questionString = questionTemplate();
-
     // clear the html from the DOM
     $('main').html('');
     // insert that HTML into the DOM
-    $('main').html(questionString);
+    $('main').html(questionTemplate());
   } else if ((STORE.quizStarted) && !(STORE.isQuestion)) {
-    const correct = correctTemplate();
-    const incorrect = incorrectTemplate();
-    const bool = wasRight();
-    if (bool) {
+    if (wasRight()) {
       // clear the html from the DOM
       $('main').html('');
       // insert that HTML into the DOM
-      $('main').html(correct);
+      $('main').html(correctTemplate());
     } else {
       // clear the html from the DOM
       $('main').html('');
       // insert that HTML into the DOM
-      $('main').html(incorrect);
+      $('main').html(incorrectTemplate());
     }
   } else if (STORE.questionNumber > STORE.questions.length) {
-    const result = resultsTemplate();
     // show results screen
     $('main').html('');
     // insert that HTML into the DOM
-    $('main').html(result);
+    $('main').html(resultsTemplate());
   }
 }
 
@@ -288,22 +319,8 @@ function renderPage() {
 
 // These functions handle events (submit, click, etc)
 
-function startGame(){
-  renderPage();
-  handleStartClick();
-}
+// make the radio button form a submit and use 'submit'!
 
-function handleSubmitAnswer(){
-  // we listen for the submit to get our answer from the radio button
-  $('.js-form').on('click', '#ans', function(event) {
-    event.preventDefault();
-    const val = $(event.currentTarget).val();
-    console.log(val);  
-    STORE.isQuestion = false;
-    renderPage();
-    return val;
-  });
-}
 
 function handleStartClick() {
   $('.js-form').on('click', '#start', function(event) {
@@ -313,6 +330,23 @@ function handleStartClick() {
     STORE.quizStarted = true;
     renderPage();
   });
+}
+
+function handleSubmitAnswer(){
+  // we listen for the submit to get our answer from the radio button
+  $('.js-form').on('submit', '#ans', function(event) {
+    console.log(event);
+    event.preventDefault();
+    const val = $(event.currentTarget).val();
+    console.log(val);
+    if (val) {
+      STORE.isQuestion = false;
+      STORE.quizStarted = true;
+      renderPage();
+    }
+    return val;
+  });
+  
 }
 
 function handleNextClick(){
@@ -340,11 +374,11 @@ function handleRestartGameClick(){
 // this function will be our callback when the page loads.
 
 function handleAll() {
+  renderPage();
   handleStartClick();
   handleSubmitAnswer();
   handleNextClick();
   handleRestartGameClick();
-  startGame();
   
 }
 
