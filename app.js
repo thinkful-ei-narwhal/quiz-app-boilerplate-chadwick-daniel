@@ -90,6 +90,33 @@ const STORE = {
  * 
  */
 
+/********** GENERAL FUNCTIONS **********/
+
+// These functions assist us with other functions
+
+function getQuestion(){
+  // we want the store question number as an index number so we can use it as
+  // an index for finding our question
+  const indexNum = STORE.questionNumber;
+  console.log(indexNum);
+  // save the Store.questions as an array
+  const quest = STORE.questions;
+  console.log(quest);
+  // we find the index number of our current question
+  return quest[indexNum];
+}
+
+function wasRight(){
+  // we get the question object from the store.questions
+  const quest = STORE.questions;
+  // we store the correctAnswer property from the question
+  const answer = quest.correctAnswer;
+  // the submitted is a value that we check against our answer to see if
+  // it's true or false and we return it
+  const submitted = handleSubmitAnswer();
+  return (submitted === answer);
+}
+
 /********** TEMPLATE GENERATION FUNCTIONS **********/
 
 // These functions return HTML templates
@@ -98,6 +125,7 @@ const STORE = {
 function questionTemplate(){
   // uses the this function to make a constant variable we can use
   const currQuest = getQuestion();
+  console.log(currQuest);
   // we want to get the number of our current question so that it looks right in the h2 header
   const num = STORE.questionNumber + 1;
   // we want the array that the answers are in so we can use them
@@ -118,7 +146,7 @@ function questionTemplate(){
         <label for="${answerArray[3]}">${answerArray[3]}</label>
         
         <label for="answer"></label>
-        <input class="submit" type="button id="answer" value="Submit">
+        <input class="submit" type="button" id="ans" value="Submit">
     </fieldset>
     </form> 
   `;
@@ -214,8 +242,6 @@ function resultsTemplate(){
 
 // we need to make this ONE function
 
-//so daniel, this function should return the greyframe html code for the next consecutive question, right?
-
 function renderPage() {
   console.log('`renderPage` ran');
 
@@ -234,9 +260,26 @@ function renderPage() {
     // insert that HTML into the DOM
     $('main').html(questionString);
   } else if ((STORE.quizStarted) && !(STORE.isQuestion)) {
-    // show the correct and incorrect page
-  } else {
+    const correct = correctTemplate();
+    const incorrect = incorrectTemplate();
+    const bool = wasRight();
+    if (bool) {
+      // clear the html from the DOM
+      $('main').html('');
+      // insert that HTML into the DOM
+      $('main').html(correct);
+    } else {
+      // clear the html from the DOM
+      $('main').html('');
+      // insert that HTML into the DOM
+      $('main').html(incorrect);
+    }
+  } else if (STORE.questionNumber > STORE.questions.length) {
+    const result = resultsTemplate();
     // show results screen
+    $('main').html('');
+    // insert that HTML into the DOM
+    $('main').html(result);
   }
 }
 
@@ -246,73 +289,50 @@ function renderPage() {
 // These functions handle events (submit, click, etc)
 
 function startGame(){
-
-  // render the page initially
-
   renderPage();
-  $('.submit').click( function(event) {
-    console.log(event);
-    $(event.currentTarget).preventDefault();
-    STORE.isQuestion = true;
-    STORE.quizStarted = true;
-    renderPage();
-  });
-  
+  handleStartClick();
 }
 
-function getQuestion(){
-  // we want the store question number as an index number so we can use it as
-  // an index for finding our question
-
-  const indexNum = STORE.questionNumber;
-  // save the Store.questions as an array
-  const quest = STORE.questions;
-  // we find the index number of our current question
-  return quest[indexNum];
-}
-
-function getAnswer(){
-  // this looks for a click on an answer class within the js form
-  $('.js-form').on('click', '.answer', event => {
+function handleSubmitAnswer(){
+  // we listen for the submit to get our answer from the radio button
+  $('#ans').click( function(event) {
     event.preventDefault();
-    // we get the value of this click and store it (which choice we made)
-
-    const val = $(event.currentTarget).first().val();
-    console.log(val);
+    const val = $(event.currentTarget).val();
+    console.log(val);  
+    STORE.isQuestion = false;
+    renderPage();
     return val;
   });
 }
 
-function submitAnswer(){
-  // we get our answer from before, and when we submit, we clear the page, 
-  // render a new page, and return the answer we selected.backlink
-  const ans = getAnswer();
-  $('.submit').click( event => {
+function handleStartClick() {
+  $('#start').click( function(event) {
+    console.log(event);
     event.preventDefault();
-    $('main').html('');    //daniel, this line clears the page, right?
+    STORE.isQuestion = true;
+    STORE.quizStarted = true;
     renderPage();
-    return ans;
   });
 }
 
-function wasRight(){
-  // we get the question object from the store.questions
-  const quest = STORE.questions;
-  // we store the correctAnswer property from the question
-  const answer = quest.correctAnswer;
-  // the submitted is a value that we check against our answer to see if
-  // it's true or false and we return it
-  const submitted = submitAnswer();
-  return (submitted === answer);
+function handleNextClick(){
+  $('#next').click( function(event) {
+    event.preventDefault();
+    STORE.questionNumber += 1;
+    STORE.isQuestion = true;
+    renderPage();
+  });
 }
 
-function nextQuestion(){
-  // working on this
-  STORE.questionNumber += 1;
-  renderPage();
+function handleRestartGameClick(){
+  $('#new-game').click( function(event) {
+    event.preventDefault();
+    STORE.questionNumber = 0;
+    STORE.isQuestion = false;
+    STORE.quizStarted = false;
+    renderPage();
+  });
 }
-
-function restartGame(){}
 
 // -----------------------------------
 
@@ -320,8 +340,12 @@ function restartGame(){}
 // this function will be our callback when the page loads.
 
 function handleAll() {
+  handleStartClick();
+  handleSubmitAnswer();
+  handleNextClick();
+  handleRestartGameClick();
   startGame();
-  renderPage();
+  
 }
 
 // when the page loads, call `handleAll`
