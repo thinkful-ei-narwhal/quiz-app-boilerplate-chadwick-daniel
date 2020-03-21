@@ -100,17 +100,19 @@ function getQuestion(){
 
 function startTemplate(){
   return `
-    <div class="cutegif">
-      <img src="https://data.whicdn.com/images/289130893/original.gif" alt="Naruto's Village" width=300px>
-    </div>
+    <div class="fade-in">
+      <div class="cutegif">
+        <img src="https://data.whicdn.com/images/289130893/original.gif" alt="Naruto's Village">
+      </div>
 
-    <div>
-      <form class="js-form">
-          <fieldset>
-              <label for="start"></label>
-              <input class="submit" type="button" id="start" value="START!">
-          </fieldset>
-      </form>
+      <div>
+        <form class="js-form">
+            <fieldset>
+                <label for="start"></label>
+                <input class="submit" type="button" id="start" value="START!">
+            </fieldset>
+        </form>
+      </div>
     </div>
   `;
 }
@@ -144,30 +146,34 @@ function questionTemplate(){
   // we probably want a loop that handles the radio answer thing here...its just way less lines
   
   const gifArr = [
-    '<img src="https://media1.tenor.com/images/357aa02bb868b08546ea4f60d2a2299b/tenor.gif" alt="naurto face" width=400px>',
-    '<img src="https://media.tenor.com/images/0b0010b6da27502d1a0a320c73eb07af/tenor.gif" alt="megumin face being pulled on" width=400px>',
-    '<img src="https://data.whicdn.com/images/241804269/original.gif" alt="erin spitting water" width=400px>',
-    '<img src="https://gifimage.net/wp-content/uploads/2017/08/saitama-one-punch-man-gif-14.gif" alt="luffy is confused" width=400px>',
-    '<img src="https://media0.giphy.com/media/3ofRH40qYdZQwaq1Vh/giphy.gif?cid=790b7611b0832d98f46c342da57ef2a46bed8cd8ae9797f4&rid=giphy.gif" alt="wind spirit pulling on face" width=400px>',
-    '<img src="https://media0.giphy.com/media/XAZpfo9whz6nu/source.gif" alt="luffy is confused" width=400px>',
+    '<img src="https://media1.tenor.com/images/357aa02bb868b08546ea4f60d2a2299b/tenor.gif" alt="naurto face"',
+    '<img src="https://media.tenor.com/images/0b0010b6da27502d1a0a320c73eb07af/tenor.gif" alt="megumin face being pulled on"',
+    '<img src="https://data.whicdn.com/images/241804269/original.gif" alt="erin spitting water"',
+    '<img src="https://gifimage.net/wp-content/uploads/2017/08/saitama-one-punch-man-gif-14.gif" alt="luffy is confused"',
+    '<img src="https://media0.giphy.com/media/3ofRH40qYdZQwaq1Vh/giphy.gif?cid=790b7611b0832d98f46c342da57ef2a46bed8cd8ae9797f4&rid=giphy.gif" alt="wind spirit pulling on face"',
+    '<img src="https://media0.giphy.com/media/XAZpfo9whz6nu/source.gif" alt="luffy is confused"',
   ];
 
   return `
-    <h2>Question ${num}:</h2>
-    <p>${currQuest.question}</p>
+    <div class="fade-in">
+      <div class="top">
+        <h2>Question ${num}:</h2>
+        <p>${currQuest.question}</p>
+      </div>
 
-    <div class="cutegif">
-      ${gifArr[STORE.questionNumber]}
-    </div>
+      <div class="cutegif">
+        ${gifArr[STORE.questionNumber]}
+      </div>
 
-    <div class="form">
-      <form class="js-form">
-        <fieldset class="radio">
-          ${radioQuestions}
-          <label for="ans"></label>
-          <input type="submit" id="ans" value="Submit">
-      </fieldset>
-      </form> 
+      <div class="form">
+        <form class="js-form">
+          <fieldset class="radio">
+            ${radioQuestions}
+            <label for="ans"></label>
+            <input type="submit" id="ans" value="Submit">
+        </fieldset>
+        </form> 
+      </div>
     </div>
   `;
 }
@@ -180,25 +186,29 @@ function correctTemplate(){
   let right = STORE.score;
   let wrong = ((STORE.questionNumber + 1) - right);
   return `
-    <h2>Correct!</h2>
+    <div class="fade-in">
+      <div class="top">
+        <h2>Correct!</h2>
+      </div>
+      
+      <div class="cutegif">
+        <img src="https://media.giphy.com/media/Diym3aZO1dHzO/giphy.gif" alt="Rei clapping">
+      </div>
 
-    <div class="cutegif">
-      <img src="https://media.giphy.com/media/Diym3aZO1dHzO/giphy.gif" alt="Rei clapping" width=400px>
-    </div>
+      <div class="score">
+        <h3>Score:</h3>
+        <p class="score">Right: ${right}</p>
+        <p class="score">Wrong: ${wrong}</p>
+      </div>
 
-    <div class="score">
-      <h3>Score:</h3>
-      <p class="score">Right: ${right}</p>
-      <p class="score">Wrong: ${wrong}</p>
-    </div>
-
-    <div class="form">
-      <form class="js-form">
-        <fieldset>
-            <label for="next"></label>
-            <input class="submit" type="button" id="next" value="Next">
-        </fieldset>
-      </form>
+      <div class="form">
+        <form class="js-form">
+          <fieldset>
+              <label for="next"></label>
+              <input class="submit" type="button" id="next" value="Next">
+          </fieldset>
+        </form>
+      </div>
     </div>
   `;
 }
@@ -218,27 +228,30 @@ function incorrectTemplate(){
   let correctAns = currQuest.correctAnswer;
 
   return `
-    <h2>Incorrect!</h2>
+    <div class="fade-in">
+      <div class="top">
+        <h2>Incorrect!</h2>
+        <h3>The correct answer was: ${correctAns}</h3>
+      </div>
 
-    <h3>The correct answer was: ${correctAns}</h3>
+      <div class="cutegif">
+        <img src="https://thumbs.gfycat.com/MeaslyJaggedBrontosaurus-size_restricted.gif" alt="aqua crying">
+      </div>
 
-    <div class="cutegif">
-      <img src="https://thumbs.gfycat.com/MeaslyJaggedBrontosaurus-size_restricted.gif" alt="aqua crying" width=400px>
-    </div>
+      <div class="score">
+        <h3>Score:</h3>
+        <p class="score">Right: ${right}<p>
+        <p class="score">Wrong: ${wrong}</p>
+      </div>
 
-    <div class="score">
-      <h3>Score:</h3>
-      <p class="score">Right: ${right}<p>
-      <p class="score">Wrong: ${wrong}</p>
-    </div>
-
-    <div class="form">
-      <form class="js-form">
-        <fieldset>
-            <label for="next"></label>
-            <input class="submit" type="button" id="next" value="Next">
-        </fieldset>
-      </form>
+      <div class="form">
+        <form class="js-form">
+          <fieldset>
+              <label for="next"></label>
+              <input class="submit" type="button" id="next" value="Next">
+          </fieldset>
+        </form>
+      </div>
     </div>
   `;
 }
@@ -249,25 +262,29 @@ function resultsTemplate(){
   let wrong = ((STORE.questionNumber +1) - right);
 
   return `
-    <h1>End of Quiz!</h1>
+    <div class="fade-in">
+      <div class="top">
+        <h1>End of Quiz!</h1>
+      </div>
 
-    <div class="score">
-      <h3>Score:</h3>
-      <p class="score">Right: ${right}<p>
-      <p class="score">Wrong: ${wrong}</p>
-    </div>
+      <div class="score">
+        <h3>Score:</h3>
+        <p class="score">Right: ${right}<p>
+        <p class="score">Wrong: ${wrong}</p>
+      </div>
 
-    <div class="cutegif">
-      <img src="https://media.giphy.com/media/EktbegF3J8QIo/giphy.gif" alt="pikachu and togepi with party hats" width=400px>
-    </div>
+      <div class="cutegif">
+        <img src="https://media.giphy.com/media/EktbegF3J8QIo/giphy.gif" alt="pikachu and togepi with party hats">
+      </div>
 
-    <div class="form">
-      <form class="js-form">
-        <fieldset>
-            <label for="new-game"></label>
-            <input class="submit" type="button" id="new-game" value="New Game">
-        </fieldset>
-      </form>
+      <div class="form">
+        <form class="js-form">
+          <fieldset>
+              <label for="new-game"></label>
+              <input class="submit" type="button" id="new-game" value="New Game">
+          </fieldset>
+        </form>
+      </div>
     </div>
   `;
 
