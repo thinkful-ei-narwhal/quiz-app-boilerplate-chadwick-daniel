@@ -170,6 +170,8 @@ function questionTemplate(){
 
   let answerArray = currQuest.answers;
 
+  // our iteration through an array to give us the radio answers, save it as a variable.
+
   let radioQuestions = answerArray.map(el => {
     let s = '';
     s += `
@@ -181,9 +183,9 @@ function questionTemplate(){
     return s;
   }).join('');
 
+  // we employed .gifs in our quiz to make it more fun and modern.  We store those gifs in a array which we can
+  // use for each question
 
-  
-  // we probably want a loop that handles the radio answer thing here...its just way less lines
   
   const gifArr = [
     '<img src="https://media1.tenor.com/images/357aa02bb868b08546ea4f60d2a2299b/tenor.gif" alt="naurto face"',
@@ -201,7 +203,7 @@ function questionTemplate(){
   return `
     <div class="fade-in">
       <div class="top">
-        <h2>Question ${num}:</h2>
+        <h2>Question ${num} out of ${STORE.questions.length}:</h2>
         <p>${currQuest.question}</p>
       </div>
 
