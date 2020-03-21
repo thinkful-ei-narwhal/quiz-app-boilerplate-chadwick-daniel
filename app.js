@@ -4,7 +4,7 @@
  * Example store structure
  */
 const STORE = {
-  // 6 question quiz
+  // 10 question quiz
 
   questions: [
     {
@@ -48,6 +48,16 @@ const STORE = {
       correctAnswer: 'Caped Baldy'
     },
     {
+      question: 'In the orignal Pokemon anime, what is the first Pokemon Ash Ketchum actually catches?',
+      answers: [
+        'Pikachu',
+        'Caterpie',
+        'Ratatta',
+        'Kirby'
+      ],
+      correctAnswer: 'Caterpie'
+    },
+    {
       question: 'How many kingdoms are there in the anime Black Clover?',
       answers: [
         '1',
@@ -66,7 +76,37 @@ const STORE = {
         'Mera Mera no Mi'
       ],
       correctAnswer: 'Gomu Gomo no Mi'
-    }
+    },
+    {
+      question: 'In the anime Full Metal Alchemist: Brotherhood, what is the name of the dog used in the infamous Chimera Experiment?',
+      answers: [
+        'Fluffy',
+        'Alexander',
+        'Spot',
+        'Buddy'
+      ],
+      correctAnswer: 'Alexander'
+    },
+    {
+      question: 'In the anime Code Geass, what is official name of the occupied zone formerly known as Japan?',
+      answers: [
+        'It is still called Japan',
+        'Nippon',
+        'Area 12',
+        'Area 11'
+      ],
+      correctAnswer: 'Area 11'
+    },
+    {
+      question: 'In the anime Dragon Ball Super, what is the small special phrase at the end needed to summon the Super Dragon Balls?',
+      answers: [
+        'Lemon Squeezy',
+        'I Wish With All My Heart',
+        'Pretty Please',
+        'Peas and Carrots'
+      ],
+      correctAnswer: 'Peas and Carrots'
+    },
   ],
   isCorrect: true,
   isQuestion: false,
@@ -149,9 +189,13 @@ function questionTemplate(){
     '<img src="https://media1.tenor.com/images/357aa02bb868b08546ea4f60d2a2299b/tenor.gif" alt="naurto face"',
     '<img src="https://media.tenor.com/images/0b0010b6da27502d1a0a320c73eb07af/tenor.gif" alt="megumin face being pulled on"',
     '<img src="https://data.whicdn.com/images/241804269/original.gif" alt="erin spitting water"',
-    '<img src="https://gifimage.net/wp-content/uploads/2017/08/saitama-one-punch-man-gif-14.gif" alt="luffy is confused"',
+    '<img src="https://gifimage.net/wp-content/uploads/2017/08/saitama-one-punch-man-gif-14.gif" alt="saitama shocked"',
+    '<img src="https://media1.giphy.com/media/12Tj4J6ghmN1pS/source.gif" alt="ash ketchum confused"',
     '<img src="https://media0.giphy.com/media/3ofRH40qYdZQwaq1Vh/giphy.gif?cid=790b7611b0832d98f46c342da57ef2a46bed8cd8ae9797f4&rid=giphy.gif" alt="wind spirit pulling on face"',
     '<img src="https://media0.giphy.com/media/XAZpfo9whz6nu/source.gif" alt="luffy is confused"',
+    '<img src="https://media1.tenor.com/images/d924f89a2eae670612f4757b931d9f14/tenor.gif" alt="edward elric looks confused"',
+    '<img src="https://i.imgur.com/qiND7mV.gif" alt="lelouch distraught"',
+    '<img src="https://thumbs.gfycat.com/YellowishGrotesqueBlackbuck-size_restricted.gif" alt="goku confused"'
   ];
 
   return `
