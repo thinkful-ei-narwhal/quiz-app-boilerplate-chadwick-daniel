@@ -10,6 +10,10 @@ body {
   margin: 0 auto;
 }
 
+.cutegif {
+  text-align: center;
+}
+
 h1, h2, h3, p {
   text-align: center;
   margin: 14px;
@@ -40,12 +44,14 @@ label {
 
 .fix {
   background-color: rgb(255, 252, 236);
+  width: fit-content;
   border: 1px solid black;
-  border-radius: 10px;
+  border-radius: 20px;
   margin: 5px;
   padding-top: 5px;
   padding-bottom: 5px;
-  padding-left: 15px;
+  padding-left: 10px;
+  padding-right: 15px;
 }
 
 .fix:hover {
@@ -89,10 +95,8 @@ input[type=submit]:hover {
 
 @media (min-width: 700px) { /* Medium Screen */
   img {
-    text-align: center;
     width: 350px;
-    border: 3px solid light grey;
-    border-radius: 10px;
+    border: 5px solid light grey;
   }
 
   h1 {
@@ -103,10 +107,8 @@ input[type=submit]:hover {
 
 @media (min-width: 1024px) { /* Large Screen */
   img {
-    text-align: center;
     width: 450px;
-    border: 3px solid light grey;
-    border-radius: 10px;
+    border: 7px solid light grey;
   }
 
   h1 {

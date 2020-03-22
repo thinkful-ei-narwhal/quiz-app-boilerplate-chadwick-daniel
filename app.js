@@ -123,11 +123,11 @@ function getQuestion(){
   // we want the store question number as an index number so we can use it as
   // an index for finding our question
 
-  let indexNum = STORE.questionNumber;
+  const indexNum = STORE.questionNumber;
 
   // save the Store.questions as an array
 
-  let quest = STORE.questions;
+  const quest = STORE.questions;
 
   // we find the index number of our current question
 
@@ -158,21 +158,26 @@ function startTemplate(){
 }
 
 function questionTemplate(){
+  // use this for the current score
+  const right = STORE.score;
+  const wrong = ((STORE.questionNumber) - right);
+
+
   // uses the this function to make a constant variable we can use
 
-  let currQuest = getQuestion();
+  const currQuest = getQuestion();
 
   // we want to get the number of our current question so that it looks right in the h2 header
 
-  let num = STORE.questionNumber + 1;
+  const num = STORE.questionNumber + 1;
 
   // we want the array that the answers are in so we can use them
 
-  let answerArray = currQuest.answers;
+  const answerArray = currQuest.answers;
 
   // our iteration through an array to give us the radio answers, save it as a variable.
 
-  let radioQuestions = answerArray.map(el => {
+  const radioQuestions = answerArray.map(el => {
     let s = '';
     s += `
     <div class=fix>
@@ -188,22 +193,27 @@ function questionTemplate(){
 
   
   const gifArr = [
-    '<img src="https://media1.tenor.com/images/357aa02bb868b08546ea4f60d2a2299b/tenor.gif" alt="naurto face"',
-    '<img src="https://media.tenor.com/images/0b0010b6da27502d1a0a320c73eb07af/tenor.gif" alt="megumin face being pulled on"',
-    '<img src="https://data.whicdn.com/images/241804269/original.gif" alt="erin spitting water"',
-    '<img src="https://gifimage.net/wp-content/uploads/2017/08/saitama-one-punch-man-gif-14.gif" alt="saitama shocked"',
-    '<img src="https://media1.giphy.com/media/12Tj4J6ghmN1pS/source.gif" alt="ash ketchum confused"',
-    '<img src="https://media0.giphy.com/media/3ofRH40qYdZQwaq1Vh/giphy.gif?cid=790b7611b0832d98f46c342da57ef2a46bed8cd8ae9797f4&rid=giphy.gif" alt="wind spirit pulling on face"',
-    '<img src="https://media0.giphy.com/media/XAZpfo9whz6nu/source.gif" alt="luffy is confused"',
-    '<img src="https://media1.tenor.com/images/d924f89a2eae670612f4757b931d9f14/tenor.gif" alt="edward elric looks confused"',
-    '<img src="https://i.imgur.com/qiND7mV.gif" alt="lelouch distraught"',
-    '<img src="https://thumbs.gfycat.com/YellowishGrotesqueBlackbuck-size_restricted.gif" alt="goku confused"'
+    '<img src="https://media1.tenor.com/images/357aa02bb868b08546ea4f60d2a2299b/tenor.gif" alt="naurto face">',
+    '<img src="https://media.tenor.com/images/0b0010b6da27502d1a0a320c73eb07af/tenor.gif" alt="megumin face being pulled on">',
+    '<img src="https://data.whicdn.com/images/241804269/original.gif" alt="erin spitting water">',
+    '<img src="https://gifimage.net/wp-content/uploads/2017/08/saitama-one-punch-man-gif-14.gif" alt="saitama shocked">',
+    '<img src="https://media1.giphy.com/media/12Tj4J6ghmN1pS/source.gif" alt="ash ketchum confused">',
+    '<img src="https://media0.giphy.com/media/3ofRH40qYdZQwaq1Vh/giphy.gif?cid=790b7611b0832d98f46c342da57ef2a46bed8cd8ae9797f4&rid=giphy.gif" alt="wind spirit pulling on face">',
+    '<img src="https://media0.giphy.com/media/XAZpfo9whz6nu/source.gif" alt="luffy is confused">',
+    '<img src="https://media1.tenor.com/images/d924f89a2eae670612f4757b931d9f14/tenor.gif" alt="edward elric looks confused">',
+    '<img src="https://i.imgur.com/qiND7mV.gif" alt="lelouch distraught">',
+    '<img src="https://thumbs.gfycat.com/YellowishGrotesqueBlackbuck-size_restricted.gif" alt="goku confused">'
   ];
 
   return `
     <div class="fade-in">
       <div class="top">
         <h2>Question ${num} out of ${STORE.questions.length}:</h2>
+        <div class="score">
+          <h3>Current Score:</h3>
+          <p class="score">Right: ${right} Wrong: ${wrong}</p>
+        </div>
+      </div>
         <p>${currQuest.question}</p>
       </div>
 
@@ -229,8 +239,8 @@ function correctTemplate(){
   // the wrong amount is the question number we are on (so how many we've answered)
   // minus the amount we have correct.
 
-  let right = STORE.score;
-  let wrong = ((STORE.questionNumber + 1) - right);
+  const right = STORE.score;
+  const wrong = ((STORE.questionNumber + 1) - right);
   return `
     <div class="fade-in">
       <div class="top">
@@ -242,7 +252,7 @@ function correctTemplate(){
       </div>
 
       <div class="score">
-        <h3>Score:</h3>
+        <h3>Current Score:</h3>
         <p class="score">Right: ${right}</p>
         <p class="score">Wrong: ${wrong}</p>
       </div>
@@ -261,17 +271,17 @@ function correctTemplate(){
 
 function incorrectTemplate(){
   // same thing
-  let right = STORE.score;
-  let wrong = ((STORE.questionNumber + 1) - right);
+  const right = STORE.score;
+  const wrong = ((STORE.questionNumber + 1) - right);
 
   // we need to get the correct answer from the question we are on
   // (we will not move onto next until we press next)
 
-  let currQuest = getQuestion();
+  const currQuest = getQuestion();
 
   // we want the correctAnswer property
 
-  let correctAns = currQuest.correctAnswer;
+  const correctAns = currQuest.correctAnswer;
 
   return `
     <div class="fade-in">
@@ -304,8 +314,8 @@ function incorrectTemplate(){
 
 function resultsTemplate(){
   // same thing
-  let right = STORE.score;
-  let wrong = ((STORE.questionNumber +1) - right);
+  const right = STORE.score;
+  const wrong = ((STORE.questionNumber +1) - right);
 
   return `
     <div class="fade-in">
@@ -387,15 +397,14 @@ function handleSubmitAnswer(){
   // we listen for the submit to get our answer from the radio button
   $('main').on('submit', '.js-form', function(event) {
     event.preventDefault();
-    let answer = $("input[name='quiz']:checked").val();
+    const answer = $('input[name="quiz"]:checked').val();
     
     if (answer) {
       STORE.isQuestion = false;
       STORE.quizStarted = true;
-      
     }
     
-    let realAnswer = getQuestion().correctAnswer;
+    const realAnswer = getQuestion().correctAnswer;
   
     // the submitted is a value that we check against our answer to see if
     // it's true or false and we return it
